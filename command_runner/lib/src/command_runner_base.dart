@@ -60,12 +60,14 @@ class CommandRunner {
         if (i + 1 >= input.length || input[i + 1].startsWith('-')) {
           throw ArgumentException('Option ${option.name} requires a value.');
         }
+
+        options[option] = input[++i];
       } else {
-        if (commandArg != null)
+        if (commandArg != null) {
           throw ArgumentException('Too many positional arguments provided.');
+        }
         commandArg = token;
       }
-      options[option] = input[++i];
     }
 
     if (command.requiresArgument &&
