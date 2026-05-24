@@ -7,8 +7,8 @@ class CommandRunner {
   CommandRunner({
     void Function(String output)? onOutput,
     void Function(Object error)? onError,
-  }) : _onOutput = onOutput,
-       _onError = onError;
+  })  : _onOutput = onOutput,
+        _onError = onError;
 
   final void Function(String output)? _onOutput;
   final void Function(Object error)? _onError;
@@ -44,26 +44,28 @@ class CommandRunner {
     for (var i = 1; i < input.length; i++) {
       final token = input[i];
       if (token.startsWith('-')) {
-        final option = command.options
-            .where((opt) => '--${opt.name}' == token || '-${opt.abbr}' == token)
-            .firstOrNull;
+        Option? option;
+        for (final opt in command.options) {
+          if ('--${opt.name}' == token || '-${opt.abbr}' == token) {
+            option = opt;
+            break;
+          }
+        }
         if (option == null) throw ArgumentException('Unknown option: $token');
-        switch (option.type) {
-          case OptionType.flag:
-            options[option] = true;
-          case OptionType.option:
-            if (i + 1 >= input.length || input[i + 1].startsWith('-')) {
-              throw ArgumentException(
-                'Option ${option.name} requires a value.',
-              );
-            }
-            options[option] = input[++i];
+        if (option.type == OptionType.flag) {
+          options[option] = true;
+          continue;
+        }
+
+        if (i + 1 >= input.length || input[i + 1].startsWith('-')) {
+          throw ArgumentException('Option ${option.name} requires a value.');
         }
       } else {
         if (commandArg != null)
           throw ArgumentException('Too many positional arguments provided.');
         commandArg = token;
       }
+      options[option] = input[++i];
     }
 
     if (command.requiresArgument &&

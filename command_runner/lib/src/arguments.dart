@@ -30,7 +30,7 @@ class Option extends Argument {
   final String? valueHelp;
   final OptionType type;
 
-  bool get requiresValue => type case OptionType.option;
+  bool get requiresValue => type == OptionType.option;
 }
 
 abstract class Command extends Argument {
@@ -98,10 +98,11 @@ class ArgResults {
       options.keys.any((option) => option.name == name || option.abbr == name);
 
   Object? getOption(String name) {
-    final option = options.keys
-        .where((option) => option.name == name || option.abbr == name)
-        .firstOrNull;
-    if (option == null) return null;
-    return options[option];
+    for (final option in options.keys) {
+      if (option.name == name || option.abbr == name) {
+        return options[option];
+      }
+    }
+    return null;
   }
 }
