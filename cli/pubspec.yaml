@@ -1,0 +1,16 @@
+name: cli
+description: dartpedia CLI app.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  command_runner: ^0.1.0
+  wikipedia: ^0.1.0
+  logging: ^1.2.0
+
+dev_dependencies:
+  lints: ^5.0.0

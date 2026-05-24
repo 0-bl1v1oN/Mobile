@@ -1,0 +1,11 @@
+name: command_runner
+description: Simple command runner package for CLI tutorials.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.5.0
+
+dev_dependencies:
+  lints: ^5.0.0

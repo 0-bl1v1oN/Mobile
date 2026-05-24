@@ -1,0 +1,17 @@
+{
+  "searchTerm": "dart",
+  "results": [
+    {
+      "id": 1,
+      "key": "Dart",
+      "title": "Dart",
+      "description": "A small missile"
+    },
+    {
+      "id": 2,
+      "key": "Dart_(programming_language)",
+      "title": "Dart (programming language)",
+      "description": "A client-optimized language"
+    }
+  ]
+}
