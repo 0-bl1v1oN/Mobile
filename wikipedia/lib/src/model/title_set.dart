@@ -21,7 +21,7 @@ class TitlesSet {
           normalized: normalized,
           display: display,
         ),
-      _ => throw const FormatException('Invalid titles set JSON.'),
+      _ => throw const FormatException('Некорректный JSON набора заголовков.'),
     };
   }
 }

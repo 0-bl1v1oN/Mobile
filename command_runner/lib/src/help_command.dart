@@ -6,11 +6,12 @@ class HelpCommand extends Command {
   String get name => 'help';
 
   @override
-  String get description => 'Prints usage information to the command line.';
+  String get description =>
+      'Показывает справку по использованию в командной строке.';
 
   @override
   String get help =>
-      'Use --verbose to print details and --command to print one command.';
+      'Используйте --verbose для подробного вывода и --command для справки по одной команде.';
 
   @override
   bool get requiresArgument => false;
@@ -18,12 +19,12 @@ class HelpCommand extends Command {
   HelpCommand() {
     addFlag(
       name: 'verbose',
-      description: 'Print all command options and details.',
+      description: 'Показать все опции команд и подробности.',
     );
     addOption(
       name: 'command',
       abbr: 'c',
-      description: 'Print help for one command.',
+      description: 'Показать справку по одной команде.',
       valueHelp: 'COMMAND',
     );
   }
@@ -32,7 +33,7 @@ class HelpCommand extends Command {
   String run(ArgResults args) {
     final runner = _runner;
     if (runner == null) {
-      return 'Help command is not attached to a CommandRunner.';
+      return 'Команда help не привязана к CommandRunner.';
     }
 
     final verbose = args.flag('verbose');
@@ -41,7 +42,7 @@ class HelpCommand extends Command {
     if (commandName != null) {
       final cmd = runner.commandByName(commandName);
       if (cmd == null) {
-        return 'Unknown command: $commandName';
+        return 'Неизвестная команда: $commandName';
       }
       return _renderCommand(cmd, verbose: true);
     }
@@ -67,11 +68,11 @@ class HelpCommand extends Command {
     }
     if (command.requiresArgument) {
       buffer.writeln();
-      buffer.write('  Argument: ${command.valueHelp ?? 'VALUE'}');
+      buffer.write('  Аргумент: ${command.valueHelp ?? 'VALUE'}');
     }
     if (command.options.isNotEmpty) {
       buffer.writeln();
-      buffer.write('  Options:');
+      buffer.write('  Опции:');
       for (final option in command.options) {
         final names =
             '--${option.name}${option.abbr != null ? ', -${option.abbr}' : ''}';

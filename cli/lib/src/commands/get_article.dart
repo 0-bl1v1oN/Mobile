@@ -12,9 +12,9 @@ class GetArticleCommand extends Command {
   @override
   String get name => 'article';
   @override
-  String get description => 'Gets article extract by title.';
+  String get description => 'Получает выдержку статьи по заголовку.';
   @override
-  String get help => 'Fetch extract for a Wikipedia article title.';
+  String get help => 'Получить выдержку по заголовку статьи Wikipedia.';
   @override
   Object get defaultValue => 'cat';
 
@@ -23,14 +23,14 @@ class GetArticleCommand extends Command {
     final title = args.commandArg ?? defaultValue.toString();
     try {
       final articles = await wikipedia.getArticleByTitle(title);
-      if (articles.isEmpty) return 'No article found for $title';
+      if (articles.isEmpty) return 'Статья не найдена: $title';
       final article = articles.first;
       return '=== ${article.title} ===\n${article.extract}';
     } on HttpException catch (e, st) {
-      logger.severe('Article HTTP error: $e', e, st);
+      logger.severe('Ошибка HTTP при получении статьи: $e', e, st);
       rethrow;
     } on FormatException catch (e, st) {
-      logger.severe('Article parse error: $e', e, st);
+      logger.severe('Ошибка разбора ответа статьи: $e', e, st);
       rethrow;
     }
   }

@@ -9,7 +9,7 @@ Future<void> main(List<String> arguments) async {
     onError: (error) {
       if (error is Error) throw error;
       if (error is Exception) {
-        logger.severe('CLI exception: $error');
+        logger.severe('Исключение CLI: $error');
       }
       write('$error'.errorText);
     },

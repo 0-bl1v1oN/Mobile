@@ -21,7 +21,7 @@ class CommandRunner {
 
   String usage() {
     final buffer = StringBuffer(
-      'Usage: dart bin/cli.dart <command> [commandArg?] [...options?]',
+      'Использование: dart bin/cli.dart <command> [commandArg?] [...options?]',
     );
     for (final command in _commands.values) {
       buffer.writeln();
@@ -31,10 +31,10 @@ class CommandRunner {
   }
 
   ArgResults parse(List<String> input) {
-    if (input.isEmpty) throw ArgumentException('Input must not be empty.');
+    if (input.isEmpty) throw ArgumentException('Ввод не должен быть пустым.');
     final command = _commands[input.first];
     if (command == null)
-      throw ArgumentException('The first word of input must be a command.');
+      throw ArgumentException('Первым словом ввода должна быть команда.');
 
     String? commandArg;
     final options = <Option, Object?>{
@@ -51,20 +51,22 @@ class CommandRunner {
             break;
           }
         }
-        if (option == null) throw ArgumentException('Unknown option: $token');
+        if (option == null)
+          throw ArgumentException('Неизвестная опция: $token');
         if (option.type == OptionType.flag) {
           options[option] = true;
           continue;
         }
 
         if (i + 1 >= input.length || input[i + 1].startsWith('-')) {
-          throw ArgumentException('Option ${option.name} requires a value.');
+          throw ArgumentException('Опция ${option.name} требует значение.');
         }
 
         options[option] = input[++i];
       } else {
         if (commandArg != null) {
-          throw ArgumentException('Too many positional arguments provided.');
+          throw ArgumentException(
+              'Передано слишком много позиционных аргументов.');
         }
         commandArg = token;
       }
@@ -73,7 +75,7 @@ class CommandRunner {
     if (command.requiresArgument &&
         commandArg == null &&
         command.defaultValue == null) {
-      throw ArgumentException('Command ${command.name} requires an argument.');
+      throw ArgumentException('Команде ${command.name} требуется аргумент.');
     }
 
     return ArgResults(
@@ -87,7 +89,7 @@ class CommandRunner {
     try {
       final args = parse(input);
       final command = args.command;
-      if (command == null) throw ArgumentException('No command to run.');
+      if (command == null) throw ArgumentException('Нет команды для запуска.');
       final result = await command.run(args);
       if (result case String text when text.isNotEmpty) {
         _onOutput?.call(text);

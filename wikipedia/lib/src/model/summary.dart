@@ -27,7 +27,7 @@ class Summary {
           extract: extract,
           titles: TitlesSet.fromJson(titles),
         ),
-      _ => throw const FormatException('Invalid summary JSON.'),
+      _ => throw const FormatException('Некорректный JSON краткого описания.'),
     };
   }
 }

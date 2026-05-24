@@ -17,14 +17,14 @@ Future<List<Article>> getArticleByTitle(String title) async {
     });
     final response = await client.get(uri);
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      throw HttpException('Failed to get article: ${response.statusCode}');
+      throw HttpException('Не удалось получить статью: ${response.statusCode}');
     }
     final data = jsonDecode(response.body);
     return switch (data) {
       {'query': {'pages': Map pages}} => Article.listFromJson(
-        pages.values.toList(),
-      ),
-      _ => throw const FormatException('Invalid article response JSON.'),
+          pages.values.toList(),
+        ),
+      _ => throw const FormatException('Некорректный JSON ответа статьи.'),
     };
   } finally {
     client.close();

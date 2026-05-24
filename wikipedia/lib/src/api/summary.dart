@@ -15,7 +15,7 @@ Future<Summary> getRandomArticleSummary() async {
     final response = await client.get(uri);
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw HttpException(
-        'Failed to load random summary: ${response.statusCode}',
+        'Не удалось загрузить случайное краткое описание: ${response.statusCode}',
       );
     }
     return Summary.fromJson(jsonDecode(response.body));
@@ -34,7 +34,7 @@ Future<Summary> getArticleSummaryByTitle(String articleTitle) async {
     final response = await client.get(uri);
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw HttpException(
-        'Failed to load article summary: ${response.statusCode}',
+        'Не удалось загрузить краткое описание статьи: ${response.statusCode}',
       );
     }
     return Summary.fromJson(jsonDecode(response.body));

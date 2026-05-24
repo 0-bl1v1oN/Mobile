@@ -20,7 +20,7 @@ class SearchResult {
         'description': final String? description,
       } =>
         SearchResult(id: id, key: key, title: title, description: description),
-      _ => throw const FormatException('Invalid search result JSON.'),
+      _ => throw const FormatException('Некорректный JSON результата поиска.'),
     };
   }
 }
@@ -38,7 +38,7 @@ class SearchResults {
           searchTerm: searchTerm,
           results: results.map(SearchResult.fromJson).toList(growable: false),
         ),
-      _ => throw const FormatException('Invalid search results JSON.'),
+      _ => throw const FormatException('Некорректный JSON результатов поиска.'),
     };
   }
 }

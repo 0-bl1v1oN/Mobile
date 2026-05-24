@@ -14,15 +14,16 @@ Future<SearchResults> search(String searchTerm) async {
     });
     final response = await client.get(uri);
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      throw HttpException('Failed to search pages: ${response.statusCode}');
+      throw HttpException(
+          'Не удалось выполнить поиск страниц: ${response.statusCode}');
     }
     final data = jsonDecode(response.body);
     return switch (data) {
       {'pages': List pages} => SearchResults(
-        searchTerm: searchTerm,
-        results: pages.map(SearchResult.fromJson).toList(growable: false),
-      ),
-      _ => throw const FormatException('Invalid search response JSON.'),
+          searchTerm: searchTerm,
+          results: pages.map(SearchResult.fromJson).toList(growable: false),
+        ),
+      _ => throw const FormatException('Некорректный JSON ответа поиска.'),
     };
   } finally {
     client.close();

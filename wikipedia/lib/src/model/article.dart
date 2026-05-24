@@ -17,14 +17,14 @@ class Article {
         'extract': String extract,
       } =>
         Article(pageId: pageId, title: title, extract: extract),
-      _ => throw const FormatException('Invalid article JSON.'),
+      _ => throw const FormatException('Некорректный JSON статьи.'),
     };
   }
 
   static List<Article> listFromJson(Object? json) {
     return switch (json) {
       List list => list.map(Article.fromJson).toList(growable: false),
-      _ => throw const FormatException('Invalid article list JSON.'),
+      _ => throw const FormatException('Некорректный JSON списка статей.'),
     };
   }
 }
